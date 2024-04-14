@@ -767,26 +767,26 @@
 
 			<div class="row block-9">
 				<div class="col-md-8">
-					<form action="#" class="bg-light p-4 p-md-5 contact-form">
+					<form action="#" class="bg-light p-4 p-md-5 contact-form" onsubmit="return sendEmail()">
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Your Name">
+									<input type="text" class="form-control" placeholder="Your Name" id="name">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Your Email">
+									<input type="text" class="form-control" placeholder="Your Email"  id="email">
 								</div>
 							</div>
 							<div class="col-md-12">
 								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Subject">
+									<input type="text" class="form-control" placeholder="Subject" id="subject">
 								</div>
 							</div>
 							<div class="col-md-12">
 								<div class="form-group">
-									<textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
+									<textarea name="" id="message" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
 								</div>
 							</div>
 							<div class="col-md-12">
@@ -920,6 +920,44 @@
 			  });
 			});
 			</script>
+
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+	// Initialize EmailJS with your user ID
+	emailjs.init("ZqAGdlu-q_WGJsESw");
+	
+	// Function to send email
+	function sendEmail() {
+		// Get form values
+		var name = document.getElementById('name').value;
+		var email = document.getElementById('email').value;
+		var subject = document.getElementById('subject').value;
+		var message = document.getElementById('message').value;
+
+		// Send email
+		emailjs.send("service_j4lzfgy","template_zye5m7k", {
+			to_name: "Amal Ganesh",
+			from_name: name,
+			message: message,
+			reply_to: email
+		}).then(function(response) {
+			console.log('Email sent successfully:', response);
+			alert('Email sent successfully!');
+			window.location.reload();
+			// Optionally, you can redirect the user to a thank you page
+			// window.location.href = "thank-you.html";
+		}, function(error) {
+			console.error('Email send failed:', error);
+			alert('Failed to send email. Please try again later.');
+			window.location.reload();
+
+		});
+
+		// Prevent default form submission
+		return false;
+	}
+</script>
+
 			
 
 		<script src="js/jquery.min.js"></script>
